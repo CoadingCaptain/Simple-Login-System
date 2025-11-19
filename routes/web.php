@@ -44,14 +44,3 @@ Route::get("/profile", [UserController::class, "profilePage"])->middleware([User
 
 Route::get("/logout", [UserController::class, "logout"]);
 
-
-
-// Category API
-
-Route::post("/category_create", [CategoryController::class, "category_create"])->middleware([UserMiddleware::class]);
-
-Route::get("/category_list", [CategoryController::class, "category_list"])->middleware([UserMiddleware::class]);
-
-Route::post("/category_delete", [CategoryController::class, "category_delete"])->middleware([UserMiddleware::class]);
-
-Route::post("/category_update", [CategoryController::class, "category_update"])->middleware([UserMiddleware::class]);
