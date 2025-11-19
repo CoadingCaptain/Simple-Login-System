@@ -1,0 +1,50 @@
+@extends('layout.app')
+<div class="container-fluid position-relative bg-white d-flex p-0">
+
+    <div class="container-fluid">
+        <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
+            <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
+                <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
+                    <h3>Verify Otp</h3>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="otp" placeholder="Otp">
+                        <label for="otp">Verify OTP</label>
+                    </div>
+
+                    <button onclick="verifyOtp()" type="button" class="btn btn-primary py-3 w-100 mb-4">Verify
+                        Otp</button>
+                    <p class="text-center mb-0">Don't have an Account? <a href="">Sign Up</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    async function verifyOtp() {
+        try {
+            let otp = document.getElementById("otp").value;
+            if (otp.length == 0) {
+                alert("Otp is required")
+            } else {
+                let res = await axios.post("/verify_otp1", {
+                    otp: otp,
+                    email: localStorage.getItem("email")
+                })
+                console.log(res.data);
+                if (res.status == 200 && res.data["status"] === "success") {
+                    alert("Otp verification successfully");
+                    localStorage.removeItem("email");
+                    setTimeout(function() {
+                        window.location.href = "/reset_pass2";
+                    }, 1000);
+                } else {
+                    alert("Otp verification failed");
+                }
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+</script>
